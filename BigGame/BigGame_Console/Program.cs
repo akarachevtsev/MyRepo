@@ -4,8 +4,8 @@ namespace BigGame_Console
 {
     enum Warrior
     {
-        Spearman = 'К',
-        Bowman = 'Л'
+        Spearman,
+        Bowman
     }
 
     class Program
@@ -13,19 +13,19 @@ namespace BigGame_Console
         static void Main(string[] args)
         {
 
-            Warrior[] orks = new Warrior[8] 
-            { 
-                Warrior.Spearman, 
-                Warrior.Spearman, 
-                Warrior.Spearman, 
-                Warrior.Spearman, 
-                Warrior.Spearman, 
-                Warrior.Bowman, 
-                Warrior.Bowman, 
-                Warrior.Bowman 
+            Warrior[] orks = new[]
+            {
+                Warrior.Spearman,
+                Warrior.Spearman,
+                Warrior.Spearman,
+                Warrior.Spearman,
+                Warrior.Spearman,
+                Warrior.Bowman,
+                Warrior.Bowman,
+                Warrior.Bowman
             };
 
-            Warrior[] elfs = new Warrior[10]
+            Warrior[] elfs = new []
             {
                 Warrior.Bowman,
                 Warrior.Bowman,
@@ -40,18 +40,22 @@ namespace BigGame_Console
             };
 
             Console.Write("Орки:\t");
-            for (int i = 0; i < orks.Length; i++)
-            {
-                Console.Write($" {(char)orks[i]}");
-            }
-            
+            foreach (Warrior i in orks)
+                ShowWarrior(i);
+
             Console.Write("\nЭльфы:\t");
-            for (int i = 0; i < elfs.Length; i++)
-            {
-                Console.Write($" {(char)elfs[i]}");
-            }
+            foreach (Warrior i in elfs)
+                ShowWarrior(i);
 
             Console.ReadKey();
+        }
+
+        static void ShowWarrior(Warrior i)
+        {
+            if (i == Warrior.Spearman)
+                Console.Write(" К");
+            else
+                Console.Write(" Л");
         }
     }
 }
