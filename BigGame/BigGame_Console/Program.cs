@@ -13,50 +13,59 @@ namespace BigGame_Console
         static void Main(string[] args)
         {
 
+            int spearmanDamageValue = 3;
+            int bowmanDamageValue = 5;
+            int spearmanHpValue = 11;
+            int bowmanHpValue = 7;
 
-            Warrior[] orks = new[]
+            var orks = new (Warrior warriorType, int healthPoints)[]
             {
-                Warrior.Spearman,
-                Warrior.Spearman,
-                Warrior.Spearman,
-                Warrior.Spearman,
-                Warrior.Spearman,
-                Warrior.Bowman,
-                Warrior.Bowman,
-                Warrior.Bowman
+                (Warrior.Spearman, spearmanHpValue),
+                (Warrior.Spearman, spearmanHpValue),
+                (Warrior.Spearman, spearmanHpValue),
+                (Warrior.Spearman, spearmanHpValue),
+                (Warrior.Spearman, spearmanHpValue),
+                (Warrior.Bowman, bowmanHpValue),
+                (Warrior.Bowman, bowmanHpValue),
+                (Warrior.Bowman, bowmanHpValue)
             };
 
-            Warrior[] elfs = new []
+            var elfs = new (Warrior warriorType, int healthPoints)[]
             {
-                Warrior.Bowman,
-                Warrior.Bowman,
-                Warrior.Bowman,
-                Warrior.Bowman,
-                Warrior.Bowman,
-                Warrior.Bowman,
-                Warrior.Spearman,
-                Warrior.Spearman,
-                Warrior.Spearman,
-                Warrior.Spearman
+                (Warrior.Bowman, bowmanHpValue),
+                (Warrior.Bowman, bowmanHpValue),
+                (Warrior.Bowman, bowmanHpValue),
+                (Warrior.Bowman, bowmanHpValue),
+                (Warrior.Bowman, bowmanHpValue),
+                (Warrior.Bowman, bowmanHpValue),
+                (Warrior.Spearman, spearmanHpValue),
+                (Warrior.Spearman, spearmanHpValue),
+                (Warrior.Spearman, spearmanHpValue),
+                (Warrior.Spearman, spearmanHpValue)
             };
+
+            //Console.WriteLine(orks[0]); //(Spearman, 11)
+            //Console.WriteLine(orks[0].healthPoints); //11
+            //orks[0].healthPoints = orks[0].healthPoints - spearmanDamageValue;
+            //Console.WriteLine(orks[0].healthPoints); //8
 
             Console.Write("Орки:\t");
-            foreach (Warrior i in orks)
-                ShowWarrior(i);
+            foreach (var i in orks)
+                ShowWarrior(i.warriorType, i.healthPoints);
 
             Console.Write("\nЭльфы:\t");
-            foreach (Warrior i in elfs)
-                ShowWarrior(i);
+            foreach (var i in elfs)
+                ShowWarrior(i.warriorType, i.healthPoints);
 
             Console.ReadKey();
         }
 
-        static void ShowWarrior(Warrior i)
+        static void ShowWarrior(Warrior warrior, int health)
         {
-            if (i == Warrior.Spearman)
-                Console.Write(" К");
+            if (warrior == Warrior.Spearman)
+                Console.Write(String.Format("{0,3}{1,3}", "К(", $"{health})"));
             else
-                Console.Write(" Л");
+                Console.Write(String.Format("{0,3}{1,3}", "Л(", $"{health})"));
         }
     }
 }
