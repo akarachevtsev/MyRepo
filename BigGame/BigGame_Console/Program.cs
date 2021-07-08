@@ -38,9 +38,9 @@ namespace BigGame_Console
                 (Warrior.Bowman, bowmanHpValue, bowmanDamageValue),
                 (Warrior.Bowman, bowmanHpValue, bowmanDamageValue),
                 (Warrior.Spearman, spearmanHpValue, spearmanDamageValue),
+                (Warrior.Spearman, spearmanHpValue, spearmanDamageValue),
+                (Warrior.Spearman, spearmanHpValue, spearmanDamageValue),
                 (Warrior.Spearman, spearmanHpValue, spearmanDamageValue)
-                //(Warrior.Spearman, spearmanHpValue, spearmanDamageValue),
-                //(Warrior.Spearman, spearmanHpValue, spearmanDamageValue)
             };
 
             ShowArmy("Orks:\t", orks);
@@ -84,12 +84,14 @@ namespace BigGame_Console
             ShowArmy("Elfs:\t", attackingRace);
         }
 
-
         static int ArmyTotalHealth((Warrior warriorType, int healthPoints, int damageValue)[] race)
         {
             int totalHealth = 0;
-            foreach (var i in race)
-                totalHealth += i.healthPoints;
+            //foreach (var i in race)
+            //    totalHealth += i.healthPoints;
+            //return totalHealth;
+            for (int i = 0; i < 8; i++)
+                totalHealth += race[i].healthPoints;
             return totalHealth;
         }
         static void ShowArmy(string raceName, (Warrior warriorType, int healthPoints, int damageValue)[] race)
@@ -101,7 +103,7 @@ namespace BigGame_Console
         }
         static void ShowWarrior(Warrior warrior, int health)
         {
-            string warriorChar = warrior == Warrior.Spearman ? "К" : "Л";
+            string warriorChar = warrior == Warrior.Spearman ? "S" : "B";
             Console.Write($" {warriorChar}({health,2})");
         }
     }
