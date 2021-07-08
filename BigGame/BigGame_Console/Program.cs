@@ -48,39 +48,51 @@ namespace BigGame_Console
 
             while (true)
             {
-                Console.WriteLine();
-                Console.WriteLine("Orks attack!");
-                for (int i = 0; i < orks.Length; i++)
-                    Attack(orks[i].healthPoints, ref elfs[i].healthPoints, orks[i].damageValue);
-                ShowArmy("Orks:\t", orks);
-                ShowArmy("Elfs:\t", elfs);
+                OrksAttack(elfs, orks);
                 if (ArmyTotalHealth(elfs) == 0)
                     break;
-                Console.WriteLine();
-                Console.WriteLine("Elfs attack!");
-                for (int i = 0; i < orks.Length; i++)
-                    Attack(elfs[i].healthPoints, ref orks[i].healthPoints, elfs[i].damageValue);
-                ShowArmy("Orks:\t", orks);
-                ShowArmy("Elfs:\t", elfs);
+
+                ElfsAttack(orks, elfs);
                 if (ArmyTotalHealth(orks) == 0)
                     break;
             }
             Console.ReadKey();
         }
-
-        static void Attack(int attackingWarriorHealth,ref int attackedWarriorHealth, int attackingWarriorDamage)
+        static void OrksAttack((Warrior warriorType, int healthPoints, int damageValue)[] attackedRace, (Warrior warriorType, int healthPoints, int damageValue)[] attackingRace)
         {
-            if (attackingWarriorHealth > 0)
-                attackedWarriorHealth = Math.Max(attackedWarriorHealth - attackingWarriorDamage, 0);
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine($"{"Orks",30} attack!");
+            Console.WriteLine();
+            for (int i = 0; i < attackingRace.Length; i++)
+                if (attackingRace[i].healthPoints > 0)
+                    attackedRace[i].healthPoints = Math.Max(attackedRace[i].healthPoints - attackingRace[i].damageValue, 0);
+            ShowArmy("Orks:\t", attackingRace);
+            ShowArmy("Elfs:\t", attackedRace);
         }
-        static int ArmyTotalHealth(params (Warrior warriorType, int healthPoints, int damageValue)[] race)
+
+        static void ElfsAttack((Warrior warriorType, int healthPoints, int damageValue)[] attackedRace, (Warrior warriorType, int healthPoints, int damageValue)[] attackingRace)
+        {
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine($"{"Elfs",30} attack!");
+            Console.WriteLine();
+            for (int i = 0; i < attackedRace.Length; i++)
+                if (attackingRace[i].healthPoints > 0)
+                    attackedRace[i].healthPoints = Math.Max(attackedRace[i].healthPoints - attackingRace[i].damageValue, 0);
+            ShowArmy("Orks:\t", attackedRace);
+            ShowArmy("Elfs:\t", attackingRace);
+        }
+
+
+        static int ArmyTotalHealth((Warrior warriorType, int healthPoints, int damageValue)[] race)
         {
             int totalHealth = 0;
             foreach (var i in race)
                 totalHealth += i.healthPoints;
             return totalHealth;
         }
-        static void ShowArmy(string raceName, params (Warrior warriorType, int healthPoints, int damageValue)[] race)
+        static void ShowArmy(string raceName, (Warrior warriorType, int healthPoints, int damageValue)[] race)
         {
             Console.Write(raceName);
             foreach (var i in race)
