@@ -16,33 +16,8 @@ namespace BigGame_Console
             int bowmanDamageValue = 5;
             int spearmanHpValue = 11;
             int bowmanHpValue = 7;
-
-            var orks = new (Warrior warriorType, int healthPoints, int damageValue)[]
-            {
-                (Warrior.Spearman, spearmanHpValue, spearmanDamageValue),
-                (Warrior.Spearman, spearmanHpValue, spearmanDamageValue),
-                (Warrior.Spearman, spearmanHpValue, spearmanDamageValue),
-                (Warrior.Spearman, spearmanHpValue, spearmanDamageValue),
-                (Warrior.Spearman, spearmanHpValue, spearmanDamageValue),
-                (Warrior.Bowman, bowmanHpValue, bowmanDamageValue),
-                (Warrior.Bowman, bowmanHpValue, bowmanDamageValue),
-                (Warrior.Bowman, bowmanHpValue, bowmanDamageValue)
-            };
-
-            var elfs = new (Warrior warriorType, int healthPoints, int damageValue)[]
-            {
-                (Warrior.Bowman, bowmanHpValue, bowmanDamageValue),
-                (Warrior.Bowman, bowmanHpValue, bowmanDamageValue),
-                (Warrior.Bowman, bowmanHpValue, bowmanDamageValue),
-                (Warrior.Bowman, bowmanHpValue, bowmanDamageValue),
-                (Warrior.Bowman, bowmanHpValue, bowmanDamageValue),
-                (Warrior.Bowman, bowmanHpValue, bowmanDamageValue),
-                (Warrior.Spearman, spearmanHpValue, spearmanDamageValue),
-                (Warrior.Spearman, spearmanHpValue, spearmanDamageValue),
-                (Warrior.Spearman, spearmanHpValue, spearmanDamageValue),
-                (Warrior.Spearman, spearmanHpValue, spearmanDamageValue)
-            };
-
+            var orks = GetOrksArmie(spearmanHpValue, spearmanDamageValue, bowmanHpValue, bowmanDamageValue);
+            var elfs = GetElfsArmie(spearmanHpValue, spearmanDamageValue, bowmanHpValue, bowmanDamageValue);
             ShowBattleField(orks, elfs);
 
             while (true)
@@ -60,6 +35,38 @@ namespace BigGame_Console
                     break;
             }
             Console.ReadKey();
+        }
+        static (Warrior warriorType, int healthPoints, int damageValue)[] GetElfsArmie(int spearmanHpValue, int spearmanDamageValue, int bowmanHpValue, int bowmanDamageValue)
+        {
+            var elfs = new (Warrior warriorType, int healthPoints, int damageValue)[]
+            {
+                (Warrior.Bowman, bowmanHpValue, bowmanDamageValue),
+                (Warrior.Bowman, bowmanHpValue, bowmanDamageValue),
+                (Warrior.Bowman, bowmanHpValue, bowmanDamageValue),
+                (Warrior.Bowman, bowmanHpValue, bowmanDamageValue),
+                (Warrior.Bowman, bowmanHpValue, bowmanDamageValue),
+                (Warrior.Bowman, bowmanHpValue, bowmanDamageValue),
+                (Warrior.Spearman, spearmanHpValue, spearmanDamageValue),
+                (Warrior.Spearman, spearmanHpValue, spearmanDamageValue),
+                (Warrior.Spearman, spearmanHpValue, spearmanDamageValue),
+                (Warrior.Spearman, spearmanHpValue, spearmanDamageValue)
+            };
+            return elfs;
+        }
+        static (Warrior warriorType, int healthPoints, int damageValue)[] GetOrksArmie(int spearmanHpValue, int spearmanDamageValue, int bowmanHpValue, int bowmanDamageValue)
+        {
+            var orks = new (Warrior warriorType, int healthPoints, int damageValue)[]
+            {
+                (Warrior.Spearman, spearmanHpValue, spearmanDamageValue),
+                (Warrior.Spearman, spearmanHpValue, spearmanDamageValue),
+                (Warrior.Spearman, spearmanHpValue, spearmanDamageValue),
+                (Warrior.Spearman, spearmanHpValue, spearmanDamageValue),
+                (Warrior.Spearman, spearmanHpValue, spearmanDamageValue),
+                (Warrior.Bowman, bowmanHpValue, bowmanDamageValue),
+                (Warrior.Bowman, bowmanHpValue, bowmanDamageValue),
+                (Warrior.Bowman, bowmanHpValue, bowmanDamageValue)
+            };
+            return orks;
         }
         static void Attack((Warrior warriorType, int healthPoints, int damageValue)[] attackedRace, (Warrior warriorType, int healthPoints, int damageValue)[] attackingRace)
         {
