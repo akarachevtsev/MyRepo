@@ -12,12 +12,10 @@ namespace BigGame_Console
     {
         static void Main(string[] args)
         {
-            int spearmanDamageValue = 3;
-            int bowmanDamageValue = 5;
-            int spearmanHpValue = 11;
-            int bowmanHpValue = 7;
-            var orks = GetOrksArmie(spearmanHpValue, spearmanDamageValue, bowmanHpValue, bowmanDamageValue);
-            var elfs = GetElfsArmie(spearmanHpValue, spearmanDamageValue, bowmanHpValue, bowmanDamageValue);
+            var armies = GetArmies();
+            var orks = armies.orks;
+            var elfs = armies.elfs;
+
             ShowBattleField(orks, elfs);
 
             while (true)
@@ -36,8 +34,13 @@ namespace BigGame_Console
             }
             Console.ReadKey();
         }
-        static (Warrior warriorType, int healthPoints, int damageValue)[] GetElfsArmie(int spearmanHpValue, int spearmanDamageValue, int bowmanHpValue, int bowmanDamageValue)
+        static ((Warrior warriorType, int healthPoints, int damageValue)[] orks, (Warrior warriorType, int healthPoints, int damageValue)[] elfs) GetArmies()
         {
+            int spearmanDamageValue = 3;
+            int bowmanDamageValue = 5;
+            int spearmanHpValue = 11;
+            int bowmanHpValue = 7;
+
             var elfs = new (Warrior warriorType, int healthPoints, int damageValue)[]
             {
                 (Warrior.Bowman, bowmanHpValue, bowmanDamageValue),
@@ -51,10 +54,6 @@ namespace BigGame_Console
                 (Warrior.Spearman, spearmanHpValue, spearmanDamageValue),
                 (Warrior.Spearman, spearmanHpValue, spearmanDamageValue)
             };
-            return elfs;
-        }
-        static (Warrior warriorType, int healthPoints, int damageValue)[] GetOrksArmie(int spearmanHpValue, int spearmanDamageValue, int bowmanHpValue, int bowmanDamageValue)
-        {
             var orks = new (Warrior warriorType, int healthPoints, int damageValue)[]
             {
                 (Warrior.Spearman, spearmanHpValue, spearmanDamageValue),
@@ -66,7 +65,8 @@ namespace BigGame_Console
                 (Warrior.Bowman, bowmanHpValue, bowmanDamageValue),
                 (Warrior.Bowman, bowmanHpValue, bowmanDamageValue)
             };
-            return orks;
+            var armies = (orks, elfs);
+            return armies;
         }
         static void Attack((Warrior warriorType, int healthPoints, int damageValue)[] attackedRace, (Warrior warriorType, int healthPoints, int damageValue)[] attackingRace)
         {
