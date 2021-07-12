@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace BigGame_Console
 {
@@ -36,35 +37,25 @@ namespace BigGame_Console
         }
         static ((Warrior warriorType, int healthPoints, int damageValue)[] orks, (Warrior warriorType, int healthPoints, int damageValue)[] elfs) GetArmies()
         {
+            string path = @"D:\MyRepo\Army_list.txt";
+            string[] fileContent = File.ReadAllLines(path);
+            string[] orksArmy = fileContent[0].Split(',');
+            string[] elfsArmy = fileContent[1].Split(',');
+
             int spearmanDamageValue = 3;
             int bowmanDamageValue = 5;
             int spearmanHpValue = 11;
             int bowmanHpValue = 7;
 
-            var elfs = new (Warrior warriorType, int healthPoints, int damageValue)[]
-            {
-                (Warrior.Bowman, bowmanHpValue, bowmanDamageValue),
-                (Warrior.Bowman, bowmanHpValue, bowmanDamageValue),
-                (Warrior.Bowman, bowmanHpValue, bowmanDamageValue),
-                (Warrior.Bowman, bowmanHpValue, bowmanDamageValue),
-                (Warrior.Bowman, bowmanHpValue, bowmanDamageValue),
-                (Warrior.Bowman, bowmanHpValue, bowmanDamageValue),
-                (Warrior.Spearman, spearmanHpValue, spearmanDamageValue),
-                (Warrior.Spearman, spearmanHpValue, spearmanDamageValue),
-                (Warrior.Spearman, spearmanHpValue, spearmanDamageValue),
-                (Warrior.Spearman, spearmanHpValue, spearmanDamageValue)
-            };
-            var orks = new (Warrior warriorType, int healthPoints, int damageValue)[]
-            {
-                (Warrior.Spearman, spearmanHpValue, spearmanDamageValue),
-                (Warrior.Spearman, spearmanHpValue, spearmanDamageValue),
-                (Warrior.Spearman, spearmanHpValue, spearmanDamageValue),
-                (Warrior.Spearman, spearmanHpValue, spearmanDamageValue),
-                (Warrior.Spearman, spearmanHpValue, spearmanDamageValue),
-                (Warrior.Bowman, bowmanHpValue, bowmanDamageValue),
-                (Warrior.Bowman, bowmanHpValue, bowmanDamageValue),
-                (Warrior.Bowman, bowmanHpValue, bowmanDamageValue)
-            };
+            var orks = new (Warrior warriorType, int healthPoints, int damageValue)[orksArmy.Length];
+            var elfs = new (Warrior warriorType, int healthPoints, int damageValue)[elfsArmy.Length];
+
+            for (int i = 0; i < orksArmy.Length; i++)
+                orks[i] = orksArmy[i] == "S" ? orks[i] = (Warrior.Spearman, spearmanHpValue, spearmanDamageValue) : orks[i] = (Warrior.Bowman, bowmanHpValue, bowmanDamageValue);
+
+            for (int i = 0; i < elfsArmy.Length; i++)
+                elfs[i] = elfsArmy[i] == "S" ? elfs[i] = (Warrior.Spearman, spearmanHpValue, spearmanDamageValue) : elfs[i] = (Warrior.Bowman, bowmanHpValue, bowmanDamageValue);
+            
             var armies = (orks, elfs);
             return armies;
         }
