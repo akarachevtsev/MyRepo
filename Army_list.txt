@@ -1,2 +1,2 @@
-S,S,S,S,L,L,L,L,S
-L,S,L,S,L,S,L,S,L,S
+S,S,S,S,B,B,B,B,S
+B,S,B,S,B,S,B,S,B,S

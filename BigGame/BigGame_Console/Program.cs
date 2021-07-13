@@ -47,6 +47,9 @@ namespace BigGame_Console
             int spearmanHpValue = 11;
             int bowmanHpValue = 7;
 
+            WarriorListValidation(orksArmy);
+            WarriorListValidation(elfsArmy);
+
             var orks = new (Warrior warriorType, int healthPoints, int damageValue)[orksArmy.Length];
             var elfs = new (Warrior warriorType, int healthPoints, int damageValue)[elfsArmy.Length];
 
@@ -58,6 +61,17 @@ namespace BigGame_Console
             
             var armies = (orks, elfs);
             return armies;
+        }
+        static void WarriorListValidation(string[] raceArmy)
+        {
+            foreach (string i in raceArmy)
+            {
+                if (i != "S" & i != "B")
+                {
+                    Console.WriteLine("Wrong warrior char in army list");
+                    Environment.Exit(0);
+                }
+            }
         }
         static void Attack((Warrior warriorType, int healthPoints, int damageValue)[] attackedRace, (Warrior warriorType, int healthPoints, int damageValue)[] attackingRace)
         {
