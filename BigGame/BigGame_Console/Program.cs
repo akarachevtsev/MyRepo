@@ -58,7 +58,7 @@ namespace BigGame_Console
             WarriorListValidation(raceArmy);
 
             for (int i = 0; i < raceArmy.Length; i++)
-                race[i] = raceArmy[i] == "S" ? race[i] = (Warrior.Spearman, spearmanHpValue, spearmanDamageValue) : (Warrior.Bowman, bowmanHpValue, bowmanDamageValue);
+                race[i] = raceArmy[i] == "S" ? (Warrior.Spearman, spearmanHpValue, spearmanDamageValue) : (Warrior.Bowman, bowmanHpValue, bowmanDamageValue);
             return race;
         }
         static void WarriorListValidation(string[] raceArmy)
