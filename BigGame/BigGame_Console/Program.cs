@@ -8,7 +8,6 @@ namespace BigGame_Console
         Spearman,
         Bowman
     }
-
     class Program
     {
         static void Main(string[] args)
@@ -42,25 +41,25 @@ namespace BigGame_Console
             string[] orksArmy = fileContent[0].Split(',');
             string[] elfsArmy = fileContent[1].Split(',');
 
+            var orks = CreateArmy(orksArmy);
+            var elfs = CreateArmy(elfsArmy);
+            var armies = (orks, elfs);
+            return armies;
+        }
+        static (Warrior warriorType, int healthPoints, int damageValue)[] CreateArmy(string[] raceArmy)
+        {
             int spearmanDamageValue = 3;
             int bowmanDamageValue = 5;
             int spearmanHpValue = 11;
             int bowmanHpValue = 7;
 
-            WarriorListValidation(orksArmy);
-            WarriorListValidation(elfsArmy);
+            var race = new (Warrior warriorType, int healthPoints, int damageValue)[raceArmy.Length];
 
-            var orks = new (Warrior warriorType, int healthPoints, int damageValue)[orksArmy.Length];
-            var elfs = new (Warrior warriorType, int healthPoints, int damageValue)[elfsArmy.Length];
+            WarriorListValidation(raceArmy);
 
-            for (int i = 0; i < orksArmy.Length; i++)
-                orks[i] = orksArmy[i] == "S" ? orks[i] = (Warrior.Spearman, spearmanHpValue, spearmanDamageValue) : orks[i] = (Warrior.Bowman, bowmanHpValue, bowmanDamageValue);
-
-            for (int i = 0; i < elfsArmy.Length; i++)
-                elfs[i] = elfsArmy[i] == "S" ? elfs[i] = (Warrior.Spearman, spearmanHpValue, spearmanDamageValue) : elfs[i] = (Warrior.Bowman, bowmanHpValue, bowmanDamageValue);
-            
-            var armies = (orks, elfs);
-            return armies;
+            for (int i = 0; i < raceArmy.Length; i++)
+                race[i] = raceArmy[i] == "S" ? race[i] = (Warrior.Spearman, spearmanHpValue, spearmanDamageValue) : (Warrior.Bowman, bowmanHpValue, bowmanDamageValue);
+            return race;
         }
         static void WarriorListValidation(string[] raceArmy)
         {
