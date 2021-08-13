@@ -3,7 +3,7 @@ using System.IO;
 
 namespace BigGame_Console
 {
-    enum Warrior
+    enum WarriorType
     {
         Spearman,
         Bowman
@@ -34,7 +34,7 @@ namespace BigGame_Console
             }
             Console.ReadKey();
         }
-        static ((Warrior warriorType, int healthPoints, int damageValue)[] orks, (Warrior warriorType, int healthPoints, int damageValue)[] elfs) GetArmies()
+        static (Warrior[] orks, Warrior[] elfs) GetArmies()
         {
             string path = @"D:\MyRepo\Army_list.txt";
             string[] fileContent = File.ReadAllLines(path);
@@ -46,19 +46,14 @@ namespace BigGame_Console
             var armies = (orks, elfs);
             return armies;
         }
-        static (Warrior warriorType, int healthPoints, int damageValue)[] CreateArmy(string[] raceArmy)
+        static Warrior[] CreateArmy(string[] raceArmy)
         {
-            int spearmanDamageValue = 3;
-            int bowmanDamageValue = 5;
-            int spearmanHpValue = 11;
-            int bowmanHpValue = 7;
-
-            var race = new (Warrior warriorType, int healthPoints, int damageValue)[raceArmy.Length];
+            var race = new Warrior[raceArmy.Length];
 
             WarriorListValidation(raceArmy);
 
             for (int i = 0; i < raceArmy.Length; i++)
-                race[i] = raceArmy[i] == "S" ? (Warrior.Spearman, spearmanHpValue, spearmanDamageValue) : (Warrior.Bowman, bowmanHpValue, bowmanDamageValue);
+                race[i] = new Warrior(raceArmy[i] == "S" ? WarriorType.Spearman : WarriorType.Bowman);
             return race;
         }
         static void WarriorListValidation(string[] raceArmy)
@@ -72,37 +67,33 @@ namespace BigGame_Console
                 }
             }
         }
-        static void Attack((Warrior warriorType, int healthPoints, int damageValue)[] attackedRace, (Warrior warriorType, int healthPoints, int damageValue)[] attackingRace)
+        static void Attack(Warrior[] attackedRace, Warrior[] attackingRace)
         {
             int minArmyLenght = Math.Min(attackedRace.Length, attackingRace.Length);
             for (int i = 0; i < minArmyLenght; i++)
-                if (attackingRace[i].healthPoints > 0)
-                    attackedRace[i].healthPoints = Math.Max(attackedRace[i].healthPoints - attackingRace[i].damageValue, 0);
+                if (attackingRace[i].HealthPoints > 0)
+                    attackedRace[i].GetAttacked(attackingRace[i].DamageValue);        
         }
-        static int ArmyTotalHealth((Warrior warriorType, int healthPoints, int damageValue)[] attackedRace, (Warrior warriorType, int healthPoints, int damageValue)[] attackingRace)
+        static int ArmyTotalHealth(Warrior[] attackedRace, Warrior[] attackingRace)
         {
             int totalHealth = 0;
             int minArmyLenght = Math.Min(attackedRace.Length, attackingRace.Length);
             for (int i = 0; i < minArmyLenght; i++)
-                totalHealth += attackedRace[i].healthPoints;
+                totalHealth += attackedRace[i].HealthPoints;
             return totalHealth;
         }
-        static void ShowBattleField((Warrior warriorType, int healthPoints, int damageValue)[] orks, (Warrior warriorType, int healthPoints, int damageValue)[] elfs)
+        static void ShowBattleField(Warrior[] orks, Warrior[] elfs)
         {
             ShowArmy("Orks:\t", orks);
             ShowArmy("Elfs:\t", elfs);
         }
-        static void ShowArmy(string raceName, (Warrior warriorType, int healthPoints, int damageValue)[] race)
+        static void ShowArmy(string raceName, Warrior[] race)
         {
             Console.Write(raceName);
-            foreach (var i in race)
-                ShowWarrior(i.warriorType, i.healthPoints);
+            foreach (var warrior in race)
+            Console.Write(warrior.ShowWarriorInfo());
+
             Console.WriteLine();
-        }
-        static void ShowWarrior(Warrior warrior, int health)
-        {
-            string warriorChar = warrior == Warrior.Spearman ? "S" : "B";
-            Console.Write($" {warriorChar}({health,2})");
         }
     }
 }
