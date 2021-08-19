@@ -90,7 +90,6 @@ namespace BigGame_Console
             Console.Write(raceName);
             foreach (var warrior in race)
                 Console.Write(warrior.ShowWarriorInfo());
-
             Console.WriteLine();
         }
     }
