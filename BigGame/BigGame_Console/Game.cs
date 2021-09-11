@@ -1,19 +1,20 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace BigGame_Console
 {
     class Game
     {
-        private readonly Warrior[] _armyOfOrks;
-        private readonly Warrior[] _armyOfElfs;
+        private readonly List<Warrior> _armyOfOrks;
+        private readonly List<Warrior> _armyOfElfs;
 
-        public Game(Warrior[] orks, Warrior[] elfs)
+        public Game(List<Warrior> orks, List<Warrior> elfs)
         {
             _armyOfOrks = orks;
             _armyOfElfs = elfs;
         }
 
-        public delegate void DShowArmy(Warrior[] orks, Warrior[] elfs);
+        public delegate void DShowArmy(List<Warrior> orks, List<Warrior> elfs);
         public event DShowArmy Notify;
         public void  Run()
         {
@@ -23,31 +24,38 @@ namespace BigGame_Console
             {
                 Console.WriteLine($"\n\n{"Orks",30} attack!\n");
                 Attack(_armyOfElfs, _armyOfOrks);
-                if (ArmyTotalHealth(_armyOfElfs, _armyOfOrks) == 0)
+                if (_armyOfElfs.Count == 0)
+                {
+                    Console.WriteLine($"\n\n{"Orks",30} win!\n");
                     break;
+                }
 
                 Console.WriteLine($"\n\n{"Elfs",30} attack!\n");
                 Attack(_armyOfOrks, _armyOfElfs);
-                if (ArmyTotalHealth(_armyOfOrks, _armyOfElfs) == 0)
+                if (_armyOfOrks.Count == 0)
+                {
+                    Console.WriteLine($"\n\n{"Elfs",30} win!\n");
                     break;
+                }
             }
             Console.ReadKey();
         }
-        private void Attack(Warrior[] attackedRace, Warrior[] attackingRace)
+        private void Attack(List<Warrior> attackedRace, List<Warrior> attackingRace)
         {
-            int minArmyLength = Math.Min(attackedRace.Length, attackingRace.Length);
+            int minArmyLength = Math.Min(attackedRace.Count, attackingRace.Count);
             for (int i = 0; i < minArmyLength; i++)
                 if (attackingRace[i].HealthPoints > 0)
                     attackedRace[i].GetAttacked(attackingRace[i].DamageValue);
+            ArmyHealthChecker(attackedRace);
             Notify?.Invoke(_armyOfOrks, _armyOfElfs);
         }
-        private static int ArmyTotalHealth(Warrior[] attackedRace, Warrior[] attackingRace)
+        private static void ArmyHealthChecker(List<Warrior> attackedRace)
         {
-            int totalHealth = 0;
-            int minArmyLength = Math.Min(attackedRace.Length, attackingRace.Length);
-            for (int i = 0; i < minArmyLength; i++)
-                totalHealth += attackedRace[i].HealthPoints;
-            return totalHealth;
+            for (int warrior = attackedRace.Count-1; warrior >= 0; warrior--)
+            {
+                if (attackedRace[warrior].HealthPoints == 0)
+                    attackedRace.Remove(attackedRace[warrior]);
+            }
         }
     }
 }

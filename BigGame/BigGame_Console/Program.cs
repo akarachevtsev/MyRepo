@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Collections.Generic;
 
 namespace BigGame_Console
 {
@@ -15,18 +16,17 @@ namespace BigGame_Console
             string path = @"D:\MyRepo\Army_list.txt";
             string[] fileContent = File.ReadAllLines(path);
 
-            Game game = new Game(ArmyManager.GetArmy(fileContent[0]), ArmyManager.GetArmy(fileContent[1]));
+            Game game = new Game(ArmyManager.GetArmy(fileContent[0].ToUpper()), ArmyManager.GetArmy(fileContent[1].ToUpper()));
             game.Notify += ShowBattleField;
             game.Run();
         }
 
-        public static void ShowBattleField(Warrior[] orks, Warrior[] elfs)
+        public static void ShowBattleField(List<Warrior> orks, List<Warrior> elfs)
         {
             ShowArmy("Orks:\t", orks);
             ShowArmy("Elfs:\t", elfs);
         }
-
-        public static void ShowArmy(string raceName, Warrior[] race)
+        public static void ShowArmy(string raceName, List<Warrior> race)
         {
             Console.Write(raceName);
             foreach (var warrior in race)
