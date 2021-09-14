@@ -21,12 +21,12 @@ namespace BigGame_Console
             game.Run();
         }
 
-        public static void ShowBattleField(List<Warrior> orks, List<Warrior> elfs)
+        public static void ShowBattleField(IEnumerable<Warrior> orks, IEnumerable<Warrior> elfs)
         {
             ShowArmy("Orks:\t", orks);
             ShowArmy("Elfs:\t", elfs);
         }
-        public static void ShowArmy(string raceName, List<Warrior> race)
+        public static void ShowArmy(string raceName, IEnumerable<Warrior> race)
         {
             Console.Write(raceName);
             foreach (var warrior in race)
